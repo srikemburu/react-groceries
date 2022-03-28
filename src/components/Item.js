@@ -40,8 +40,6 @@ const Item = ({
     setEditId(id);
   };
 
-  // console.log("Item.js: ", item)
-
   return (
     <div className="item">
       <input
@@ -56,18 +54,6 @@ const Item = ({
         }}
         className={complete ? "complete" : ""}
       />
-
-      {/* <img
-        style={{ cursor: "pointer" }}
-        src="https://img.icons8.com/emoji/36/000000/pencil-emoji.png"
-        onClick={() => {
-          const confirmBox = window.confirm("Do you want to edit this item?");
-          if (confirmBox === true) {
-            handleItem(id);
-          }
-        }}
-        alt="edit item"
-      /> */}
 
       <img
         style={{ cursor: "pointer" }}
