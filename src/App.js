@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import "./App.css";
 import Item from "./components/Item";
@@ -11,51 +10,51 @@ const arr = () => {
 };
 
 function App() {
-   const [item, setItem] = useState("");
+  const [item, setItem] = useState([
+    { itemName: 'Paper Towels', brand: 'Bounty', units: '4 Pack', quantity: 3, isPurchased: false },
+    { itemName: 'Ground Coffee', brand: 'Peets', units: '10', quantity: 2, isPurchased: true },
+    { itemName: 'Trash Bags', brand: 'Glad', units: '110 Count', quantity: 1, isPurchased: false },
+  ]);
+  
+  const [itemValue, setItemValue] = useState('');
+  const [brandValue, setBrandValue] = useState('');
+  const [unitValue, setUnitValue] = useState('');
+  const [qtyValue, setQtyValue] = useState('');
 
-  console.log("start iem: " + item)
-  const [edit, setEdit] = useState(false);
-  const [editId, setEditId] = useState();
+  console.log("Initial item: ",  item)
+
   const [list, setList] = useState(arr);
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
+
     const newItem = {
       id: uuidv4(),
-      item: item,
-      complete: false,
+      itemName: itemValue,
+      brand: brandValue,
+      units: unitValue,
+      quantity: qtyValue,
+      isPurchased: false,
     };
+
+    console.log("newItem line 44: ", newItem)
+    setList([...list, newItem]);
+
+    const newItems = [...item, newItem]
+    setItem(newItems)
+
+    console.log("Item line 52: ",  item)
+    setItemValue("")
+    setBrandValue("")
+    setUnitValue("")
+    setQtyValue('')
+   
     e.preventDefault();
-    if (item && item.length <= 25 && !edit) {
-      setList([...list, newItem]);
-      setItem("");
-      setError("");
-    } else if (item && item.length <= 25 && edit && editId) {
-      setList(
-        list.map((el) => {
-          if (el.id === editId) {
-            return { ...el, item: item };
-          }
-          return el;
-        })
-      );
-      setItem("");
-      setEditId(null);
-      setEdit(false);
-      setError("");
-    } else if (!item) setError("Item cannot be blank.");
-    else if (item.length > 25) setError("Character limit is 25.");
   };
 
   React.useEffect(() => {
     localStorage.setItem("data", JSON.stringify(list));
-
-    console.log(list)
   }, [list]);
-
-  const handleChange = (e) => {
-    setItem(e.target.value);
-  };
 
   return (
     <div className="App">
@@ -64,36 +63,61 @@ function App() {
         <input
           className="input"
           type="text"
-          value={item}
-          placeholder="Item,Brand,Units,Quantity"
-          onChange={handleChange}
+          value={itemValue}
+          placeholder="Enter item Name"
+          onChange={(event) => setItemValue(event.target.value)} 
         />
-        {edit ? (
-          <button className="btn" type="submit">
-            Edit Item
-          </button>
-        ) : (
-          <button className="btn" type="submit">
+
+        <input
+          className="input"
+          type="text"
+          value={brandValue}
+          placeholder="Enter Brand"
+          onChange={(event) => setBrandValue(event.target.value)} 
+        />
+
+        <input
+          className="input"
+          type="text"
+          value={unitValue}
+          placeholder="Enter Units 12 pack, 1ld, 2 liters"
+          onChange={(event) => setUnitValue(event.target.value)} 
+        />    
+
+        <input
+          className="input"
+          type="text"
+          value={qtyValue}
+          placeholder="Enter Quantity"
+          onChange={(event) => setQtyValue(event.target.value)} 
+        />
+
+        <br/><br/>
+
+        <button className="btn" type="submit">
             Add Item
-          </button>
-        )}
+        </button><br/><br/>
+
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
+
+     
       <div>
-        {list.map((c, id) => (
-          <>
-          <Item
-            key={id}
-            id={c.id}
-            item={c.item}
-            list={list}
-            setList={setList}
-            complete={c.complete}
-            setItem={setItem}
-            setEdit={setEdit}
-            setEditId={setEditId}
-          />
-          </>
+        {item.map((oneItem, id) => (
+          <div>
+            <Item
+              key={id}
+              id={oneItem.id}
+              itemName={oneItem.itemName}
+              brand={oneItem.brand}
+              units={oneItem.units}
+              quantity={oneItem.quantity}
+              isPurchased={oneItem.isPurchased}
+              list={list}
+              setList={setList}
+              setItem={setItem}
+            />
+          </div>
         )
         )}
       </div>

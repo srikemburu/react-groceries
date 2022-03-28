@@ -3,15 +3,21 @@ import "./Item.css";
 
 const Item = ({
   id,
-  item,
+  itemName,
+  brand,
+  units,
+  quantity,
   list,
   setEdit,
   setEditId,
   setItem,
   setList,
-  complete,
-
+  isPurchased,
 }) => {
+
+  // Define itemInfo for display purpose
+  const itemInfo = itemName + ', Brand: ' + brand + ', Units: ' + units + ', Qty=' + quantity
+
   //Delete Item
   const remove = (id) => {
     setList(list.filter((el) => el.id !== id));
@@ -32,49 +38,23 @@ const Item = ({
     );
   };
 
-  //Edit Item
-  const handleItem = (id) => {
-    const editItem = list.find((el) => el.id === id);
-    setItem(editItem.item);
-    setEdit(true);
-    setEditId(id);
-  };
-
   return (
     <div className="item">
       <input
         type="text"
-        defaultValue={item}
+        defaultValue={itemInfo}
+        size="50"
         style={{
           border: "none",
           outline: "none",
-          backgroundColor: "gray",
+          backgroundColor: "green",
           color: "white",
           fontSize: "20px",
         }}
-        className={complete ? "complete" : ""}
+        className={isPurchased ? "purchased" : ""}
       />
+      
 
-      <img
-        style={{ cursor: "pointer" }}
-        onClick={() => handleComplete(id)}
-        src="https://img.icons8.com/offices/40/000000/checked-2--v2.png"
-        alt="mark item complete"
-      />
-
-      <img
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          const confirmBox = window.confirm(
-            "Are you sure you want to delete this item?"
-          );
-          if (confirmBox === true) {
-            remove(id);
-          }
-        }}
-        src="https://img.icons8.com/color/48/000000/trash.png"
-        alt="delete item"
-      />
 
     </div>
   );
