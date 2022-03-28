@@ -3,10 +3,12 @@ import "./Item.css";
 
 const Item = ({
   id,
+  oneItem,
   itemName,
   brand,
   units,
   quantity,
+  item,
   list,
   setEdit,
   setEditId,
@@ -20,20 +22,21 @@ const Item = ({
 
   //Delete Item
   const remove = (id) => {
-    setList(list.filter((el) => el.id !== id));
+    console.log("List line 23: ", id, oneItem)
+    setItem(item.filter((el) => el.id !== id));
   };
 
   //Mark Item completed
   const handleComplete = (id) => {
-    setList(
-      list.map((item) => {
-        if (item.id === id) {
+    setItem(
+      item.map((itm) => {
+        if (itm.id === id) {
           return {
-            ...item,
-            complete: !item.complete,
+            ...itm,
+            isPurchased: !itm.isPurchased,
           };
         }
-        return item;
+        return itm;
       })
     );
   };
@@ -52,6 +55,27 @@ const Item = ({
           fontSize: "20px",
         }}
         className={isPurchased ? "purchased" : ""}
+      />
+
+<img
+        style={{ cursor: "pointer" }}
+        onClick={() => handleComplete(id)}
+        src="https://img.icons8.com/offices/40/000000/checked-2--v2.png"
+        alt="mark item complete"
+      />
+
+      <img
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          const confirmBox = window.confirm(
+            "Are you sure you want to delete this item?"
+          );
+          if (confirmBox === true) {
+            remove(id);
+          }
+        }}
+        src="https://img.icons8.com/color/48/000000/trash.png"
+        alt="delete item"
       />
       
 

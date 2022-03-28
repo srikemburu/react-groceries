@@ -11,9 +11,9 @@ const arr = () => {
 
 function App() {
   const [item, setItem] = useState([
-    { itemName: 'Paper Towels', brand: 'Bounty', units: '4 Pack', quantity: 3, isPurchased: false },
-    { itemName: 'Ground Coffee', brand: 'Peets', units: '10', quantity: 2, isPurchased: true },
-    { itemName: 'Trash Bags', brand: 'Glad', units: '110 Count', quantity: 1, isPurchased: false },
+    { id: '0', itemName: 'Paper Towels', brand: 'Bounty', units: '4 Pack', quantity: 3, isPurchased: false },
+    { id: '1', itemName: 'Ground Coffee', brand: 'Peets', units: '10', quantity: 2, isPurchased: true },
+    { id: '2', itemName: 'Trash Bags', brand: 'Glad', units: '110 Count', quantity: 1, isPurchased: false },
   ]);
   
   const [itemValue, setItemValue] = useState('');
@@ -38,7 +38,8 @@ function App() {
     };
 
     console.log("newItem line 44: ", newItem)
-    setList([...list, newItem]);
+    setList([...list, newItem])
+    setError("")
 
     const newItems = [...item, newItem]
     setItem(newItems)
@@ -108,12 +109,14 @@ function App() {
             <Item
               key={id}
               id={oneItem.id}
+              oneItem={oneItem}
               itemName={oneItem.itemName}
               brand={oneItem.brand}
               units={oneItem.units}
               quantity={oneItem.quantity}
               isPurchased={oneItem.isPurchased}
               list={list}
+              item={item}
               setList={setList}
               setItem={setItem}
             />
