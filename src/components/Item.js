@@ -18,7 +18,7 @@ const Item = ({
 }) => {
 
   // Define itemInfo for display purpose
-  const itemInfo = itemName + ', Brand: ' + brand + ', Units: ' + units + ', Qty=' + quantity
+  const itemInfo = itemName + ', Brand: ' + brand + ', Units: ' + units + ', Qty=' + quantity 
 
   //Delete Item
   const remove = (id) => {
@@ -31,11 +31,12 @@ const Item = ({
     setItem(
       item.map((itm) => {
         if (itm.id === id) {
+          console.log("isPurchased? ", itm)
           return {
             ...itm,
             isPurchased: !itm.isPurchased,
           };
-        }
+        }  
         return itm;
       })
     );
@@ -54,7 +55,7 @@ const Item = ({
           color: "white",
           fontSize: "20px",
         }}
-        className={isPurchased ? "purchased" : ""}
+        className={isPurchased ? "isPurchased" : ""}
       />
 
 <img
